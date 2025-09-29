@@ -31,11 +31,12 @@ class LeadController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name'  => 'required|string|max:255',
-            'email' => 'required|email|unique:leads,email',
+            'name'  => 'nullable|string|max:255',
+            'email' => 'nullable|email',   // allows missing or test emails
             'phone' => 'nullable|string|max:20',
             'notes' => 'nullable|string',
         ]);
+
 
         $lead = Lead::create($request->all());
 

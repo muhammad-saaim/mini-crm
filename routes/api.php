@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\LeadController;
 |
 | Routes loaded here are intended for API usage.
 | CSRF protection is not applied to these routes by default.
+| Laravel automatically prefixes these routes with `/api`.
 |
 */
 
@@ -19,5 +20,8 @@ Route::get('/health', function () {
 });
 
 // Lead API routes
-Route::get('/leads', [LeadController::class, 'index']);   // List all leads
-Route::post('/leads', [LeadController::class, 'store']);  // Create a new lead
+Route::get('/leads', [LeadController::class, 'index']);        // List all leads
+Route::post('/leads', [LeadController::class, 'store']);       // Create a new lead
+Route::get('/leads/{id}', [LeadController::class, 'show']);    // Get single lead
+Route::put('/leads/{id}', [LeadController::class, 'update']);  // Update lead
+Route::delete('/leads/{id}', [LeadController::class, 'destroy']); // Delete lead

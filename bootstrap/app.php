@@ -1,14 +1,19 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\LeadController;
+use Illuminate\Foundation\Application;
+use Illuminate\Foundation\Configuration\Exceptions;
+use Illuminate\Foundation\Configuration\Middleware;
 
-// Health check
-Route::get('/health', fn() => response()->json(['status'=>'ok']));
-
-// Lead CRUD routes
-Route::get('/leads', [LeadController::class, 'index']);       // List all leads
-Route::post('/leads', [LeadController::class, 'store']);      // Create new lead
-Route::get('/leads/{id}', [LeadController::class, 'show']);   // Get single lead
-Route::put('/leads/{id}', [LeadController::class, 'update']); // Update lead
-Route::delete('/leads/{id}', [LeadController::class, 'destroy']); // Delete lead
+return Application::configure(basePath: dirname(__DIR__))
+    ->withRouting(
+        web: __DIR__.'/../routes/web.php',       // Web routes (with CSRF)
+        api: __DIR__.'/../routes/api.php',       // API routes (CSRF excluded)
+        commands: __DIR__.'/../routes/console.php',
+        health: '/up',
+    )
+    ->withMiddleware(function (Middleware $middleware): void {
+        //
+    })
+    ->withExceptions(function (Exceptions $exceptions): void {
+        //
+    })->create();
